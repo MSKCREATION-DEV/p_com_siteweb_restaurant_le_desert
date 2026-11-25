@@ -1,0 +1,172 @@
+---
+/**
+ * Formulaire honnête : demande de contact / réservation.
+ * Pas d’e-mail inventé. Prépare un message WhatsApp / tel.
+ */
+import Button from '../ui/Button.astro';
+import { restaurant, isPublicContact } from '../../data/restaurant';
+
+const phone = restaurant.contact.phone;
+const whatsapp = restaurant.contact.whatsapp;
+const hasWa = whatsapp && isPublicContact(whatsapp.status);
+---
+
+<form
+  class="contact-form space-y-6"
+  novalidate
+  data-contact-form
+  data-wa-url={hasWa && whatsapp ? whatsapp.href : ''}
+>
+  <p class="border border-ink/15 bg-linen-deep/50 px-4 py-3 font-ui text-sm text-ink">
+    Ceci est une <strong>demande</strong> de contact ou de table. Aucune réservation n’est confirmée automatiquement.
+  </p>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div>
+      <label for="name" class="font-ui text-sm font-medium text-ink">Nom complet</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        required
+        autocomplete="name"
+        maxlength="120"
+        class="mt-2 w-full border border-ink/20 bg-white px-3 py-3 font-body text-ink outline-none focus:border-desert-red"
+      />
+    </div>
+    <div>
+      <label for="phone" class="font-ui text-sm font-medium text-ink">Téléphone</label>
+      <input
+        id="phone"
+        name="phone"
+        type="tel"
+        autocomplete="tel"
+        maxlength="40"
+        class="mt-2 w-full border border-ink/20 bg-white px-3 py-3 font-body text-ink outline-none focus:border-desert-red"
+      />
+    </div>
+  </div>
+
+  <div>
+    <label for="email" class="font-ui text-sm font-medium text-ink">E-mail</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      required
+      autocomplete="email"
+      maxlength="120"
+      class="mt-2 w-full border border-ink/20 bg-white px-3 py-3 font-body text-ink outline-none focus:border-desert-red"
+    />
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div>
+      <label for="date" class="font-ui text-sm font-medium text-ink">Date souhaitée (optionnel)</label>
+      <input
+        id="date"
+        name="date"
+        type="date"
+        class="mt-2 w-full border border-ink/20 bg-white px-3 py-3 font-body text-ink outline-none focus:border-desert-red"
+      />
+    </div>
+    <div>
+      <label for="guests" class="font-ui text-sm font-medium text-ink">Couverts (optionnel)</label>
+      <input
+        id="guests"
+        name="guests"
+        type="number"
+        min="1"
+        max="30"
+        class="mt-2 w-full border border-ink/20 bg-white px-3 py-3 font-body text-ink outline-none focus:border-desert-red"
+      />
+    </div>
+  </div>
+
+  <div>
+    <label for="message" class="font-ui text-sm font-medium text-ink">Message</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="5"
+      required
+      maxlength="2000"
+      class="mt-2 w-full border border-ink/20 bg-white px-3 py-3 font-body text-ink outline-none focus:border-desert-red"
+      placeholder="Précisez votre demande (horaire, occasion…)"
+    ></textarea>
+  </div>
+
+  <p class="font-ui text-xs text-muted" role="status" data-form-status hidden></p>
+
+  <div class="flex flex-wrap gap-4">
+    {
+      hasWa && whatsapp ? (
+        <Button type="submit" variant="primary">Envoyer via WhatsApp</Button>
+      ) : (
+        <Button type="submit" variant="primary">Préparer la demande</Button>
+      )
+    }
+    {
+      phone && isPublicContact(phone.status) && (
+        <Button href={phone.href} variant="ghost">Appeler</Button>
+      )
+    }
+  </div>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const status = document.querySelector<HTMLElement>('[data-form-status]');
+  const waBase = form?.dataset.waUrl ?? '';
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const name = String(fd.get('name') ?? '').trim();
+    const email = String(fd.get('email') ?? '').trim();
+    const phoneVal = String(fd.get('phone') ?? '').trim();
+    const date = String(fd.get('date') ?? '').trim();
+    const guests = String(fd.get('guests') ?? '').trim();
+    const message = String(fd.get('message') ?? '').trim();
+
+    if (!name || !email || !message) {
+      if (status) {
+        status.hidden = false;
+        status.textContent = 'Merci de remplir nom, e-mail et message.';
+      }
+      return;
+    }
+
+    const lines = [
+      `Demande de table — Le Désert`,
+      `Nom: ${name}`,
+      `E-mail: ${email}`,
+      phoneVal ? `Tél: ${phoneVal}` : '',
+      date ? `Date: ${date}` : '',
+      guests ? `Couverts: ${guests}` : '',
+      '',
+      message,
+      '',
+      '(Demande uniquement — pas une confirmation automatique)',
+    ].filter(Boolean);
+
+    if (!waBase) {
+      if (status) {
+        status.hidden = false;
+        status.textContent =
+          'Demande préparée. Contactez l’établissement dès que le canal officiel sera confirmé.';
+      }
+      return;
+    }
+
+    const sep = waBase.includes('?') ? '&' : '?';
+    const url = `${waBase}${sep}text=${encodeURIComponent(lines.join('\n'))}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+
+    if (status) {
+      status.hidden = false;
+      status.textContent =
+        'WhatsApp s’ouvre avec votre message. Aucune table n’est réservée automatiquement.';
+    }
+  });
+</script>

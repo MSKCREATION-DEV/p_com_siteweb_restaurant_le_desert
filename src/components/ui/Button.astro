@@ -1,0 +1,36 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'ghost' | 'ghost-light' | 'link';
+  type?: 'button' | 'submit';
+  class?: string;
+}
+
+const { href, variant = 'primary', type = 'button', class: className } = Astro.props;
+
+const variants: Record<string, string> = {
+  primary:
+    'bg-desert-red text-white hover:bg-desert-red-hover border border-desert-red',
+  ghost:
+    'bg-transparent text-ink border border-ink/25 hover:border-ink',
+  'ghost-light':
+    'bg-transparent text-white border border-white/40 hover:border-white',
+  link:
+    'bg-transparent text-desert-red border-0 underline-offset-4 hover:underline px-0 py-0',
+};
+
+const base =
+  'font-ui inline-flex items-center justify-center gap-2 px-5 py-3 text-[0.75rem] font-semibold uppercase tracking-[0.14em] no-underline transition-colors duration-300';
+---
+
+{
+  href ? (
+    <a href={href} class:list={[base, variants[variant], className]}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class:list={[base, variants[variant], className]}>
+      <slot />
+    </button>
+  )
+}

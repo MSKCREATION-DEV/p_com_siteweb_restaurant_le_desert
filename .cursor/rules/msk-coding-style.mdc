@@ -1,0 +1,42 @@
+---
+description: Style MSK issu des projets vitrine/ERP — patterns, architecture, qualité
+alwaysApply: true
+---
+
+# Style de code MSK (profil consolidé)
+
+Patterns observés sur `karamfc`, `site_web_PPM` (Prosperity), `site_web_msk`, `erp_msk`.
+
+## Décisions de stack (historique)
+
+| Type de produit | Stack habituelle |
+|-----------------|------------------|
+| Site vitrine / resto / hôtel / travel | **Astro** SSG + TS + Tailwind 4, JS client minimal |
+| Site corporate complexe (i18n SSR) | React Router Framework Mode SSR |
+| App métier / ERP / auth / DB | **Next.js** + Prisma + Supabase |
+
+Restaurant Le Désert = vitrine → **favoriser Astro** sauf besoin app (compte, panier serveur, CMS headless lourd).
+
+## Architecture
+
+- `UI ≠ content ≠ data` — contenu dans `src/data/` (ou `app/content`), composants via props.
+- Tokens CSS (`src/styles/tokens.css`) — pas de couleurs hardcodées dispersées.
+- Layout unique `BaseLayout` : SEO, fonts, contact/WhatsApp.
+- Une section = un objectif, un titre, une phrase support.
+- Contenu non vérifié → « à confirmer », **jamais inventé**.
+- Assets marque = fichiers officiels uniquement (pas Unsplash « similaire »).
+
+## Qualité & process
+
+- Spec / CONSTRAINTS / AGENTS.md avant le code.
+- Une section à la fois (pas de big-bang).
+- Gates : `typecheck` / `astro check` / `build` avant « fini ».
+- Commits seulement sur demande explicite.
+- Context7 pour docs de libs (Astro, Next, Tailwind…).
+
+## Design UI (vitrines)
+
+- Hero full-bleed, brand fort, peu de clutter.
+- Cards seulement si interaction.
+- 2–3 motions intentionnelles max.
+- Perf Mali : peu de JS, images optimisées, fonts `display: swap`.

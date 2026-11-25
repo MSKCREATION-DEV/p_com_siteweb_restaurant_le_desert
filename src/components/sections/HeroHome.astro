@@ -1,0 +1,214 @@
+---
+import { restaurant } from '../../data/restaurant';
+import { galleryImages } from '../../data/gallery';
+
+/** Slideshow assiettes / culture — style Sphere, couleurs Désert (plats Sahel d’abord) */
+const slides = [
+  galleryImages.find((i) => i.id === 'mafe')!,
+  galleryImages.find((i) => i.id === 'grillade')!,
+  galleryImages.find((i) => i.id === 'plats-afrique')!,
+  galleryImages.find((i) => i.id === 'culture-the')!,
+].filter(Boolean);
+---
+
+<!-- Hero V6 — split sombre Sphere-like ; pas de vignette équipe -->
+<section
+  class="hero-v4 relative min-h-dvh overflow-hidden bg-night text-white"
+  aria-label="Introduction"
+>
+  <!-- Fond texture sable / béton désert -->
+  <div class="absolute inset-0" aria-hidden="true">
+    <img
+      src="/images/textures/sable-texture.jpg"
+      alt=""
+      width="1600"
+      height="1060"
+      class="h-full w-full scale-105 object-cover opacity-40"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-gradient-to-br from-night via-chocolate/95 to-night"></div>
+    <div class="texture-touareg absolute inset-0 opacity-35 mix-blend-soft-light"></div>
+  </div>
+
+  <!-- Overlay spray sable (casse la grille) -->
+  <img
+    src="/images/overlays/spray-sable-red.png"
+    alt=""
+    width="900"
+    height="500"
+    class="pointer-events-none absolute -right-8 top-[18%] z-20 w-[min(42vw,22rem)] opacity-80 mix-blend-screen md:top-[12%] md:w-[min(38vw,28rem)]"
+    aria-hidden="true"
+    data-hero-spray
+  />
+  <img
+    src="/images/overlays/spray-sable-amber.png"
+    alt=""
+    width="700"
+    height="380"
+    class="pointer-events-none absolute bottom-[18%] left-[8%] z-20 w-[min(36vw,16rem)] rotate-12 opacity-70 mix-blend-screen md:bottom-[22%]"
+    aria-hidden="true"
+  />
+
+  <div class="relative z-10 container-site grid min-h-dvh items-center gap-10 pb-16 pt-28 lg:grid-cols-12 lg:gap-8 lg:pb-20 lg:pt-24">
+    <!-- Colonne typo — pas de nom de marque en H1 -->
+    <div class="lg:col-span-5 lg:pr-4">
+      <p
+        class="eyebrow mb-5 text-sun"
+        data-hero-title
+        style="opacity:0;transform:translateY(16px)"
+      >
+        {restaurant.locationLabel}
+      </p>
+      <h1
+        class="font-display text-balance text-[clamp(2.6rem,6.5vw,4.75rem)] leading-[1.05] text-white"
+        data-hero-title
+        style="opacity:0;transform:translateY(24px)"
+      >
+        Le goût authentique<br />du Nord
+      </h1>
+      <p
+        class="mt-3 font-ui text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-gold/90"
+        data-hero-title
+        style="opacity:0;transform:translateY(18px)"
+      >
+        Au cœur du Mali
+      </p>
+      <p
+        class="mt-6 max-w-md text-base text-white/80 md:text-lg"
+        data-hero-title
+        style="opacity:0;transform:translateY(18px)"
+      >
+        Hospitalité touareg et table à Bamako — salon tente, motifs du Sahel, gastronomie au centre.
+      </p>
+      <p
+        class="mt-10"
+        data-hero-title
+        style="opacity:0;transform:translateY(14px)"
+      >
+        <a
+          href="/contact"
+          class="font-ui group inline-flex items-center gap-3 bg-desert-red px-5 py-3 text-[0.75rem] font-bold uppercase tracking-[0.14em] text-white no-underline transition-colors hover:bg-desert-red-hover"
+        >
+          Demander une table
+          <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+        </a>
+      </p>
+    </div>
+
+    <!-- Composition droite : slideshow assiettes + fade soft vers fond -->
+    <div class="relative lg:col-span-7" data-hero-media>
+      <div class="hero-plate relative aspect-[5/4] overflow-hidden md:aspect-[16/11]">
+        {
+          slides.map((slide, i) => (
+            <img
+              src={slide.src}
+              alt={slide.alt}
+              width="1200"
+              height="900"
+              class:list={[
+                'hero-slide absolute inset-0 h-full w-full object-cover',
+                i === 0 ? 'is-active' : '',
+              ]}
+              data-hero-slide={i}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchpriority={i === 0 ? 'high' : undefined}
+            />
+          ))
+        }
+        <!-- Soft mask gauche → fond (Sphere-like) -->
+        <div
+          class="pointer-events-none absolute inset-y-0 left-0 z-10 w-[28%] bg-gradient-to-r from-night via-night/70 to-transparent"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-night/50 via-transparent to-transparent"
+          aria-hidden="true"
+        ></div>
+      </div>
+
+      <img
+        src="/images/overlays/spray-sable-copper.png"
+        alt=""
+        width="800"
+        height="420"
+        class="pointer-events-none absolute -right-6 -top-8 z-30 w-[45%] rotate-6 opacity-85 mix-blend-screen md:-right-10 md:-top-10"
+        aria-hidden="true"
+      />
+    </div>
+  </div>
+
+  <div
+    class="relative z-10 border-t border-white/15"
+    data-hero-title
+    style="opacity:0"
+  >
+    <div class="container-site flex flex-wrap items-center justify-between gap-4 py-5">
+      <p class="font-ui text-[0.65rem] uppercase tracking-[0.14em] text-gold/80">
+        Photos du lieu · culture du Nord
+      </p>
+      <a
+        href="/notre-histoire"
+        class="font-ui text-[0.7rem] uppercase tracking-[0.14em] text-sun no-underline hover:text-gold"
+      >
+        Découvrir le salon tente →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-plate {
+    mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
+  }
+
+  .hero-slide {
+    opacity: 0;
+    transform: scale(1.06);
+    transition:
+      opacity 1.4s var(--ease-out),
+      transform 8s linear;
+  }
+
+  .hero-slide.is-active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+  }
+
+  [data-hero-title] {
+    transition:
+      opacity 1s var(--ease-out),
+      transform 1s var(--ease-out);
+  }
+  [data-hero-title].is-in {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide {
+      transition: opacity 0.4s ease;
+      transform: none !important;
+    }
+    [data-hero-title] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const slides = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-slide]'));
+  if (slides.length > 1 && !reduce) {
+    let i = 0;
+    window.setInterval(() => {
+      slides[i]?.classList.remove('is-active');
+      i = (i + 1) % slides.length;
+      slides[i]?.classList.add('is-active');
+    }, 5200);
+  }
+</script>

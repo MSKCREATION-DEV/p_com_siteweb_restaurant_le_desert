@@ -1,0 +1,15 @@
+---
+/**
+ * No-op V5 — les bandeaux de statut internes ne sont plus rendus en UI publique.
+ * Conservé pour ne pas casser les imports ; détails uniquement dans docs/.
+ */
+import type { ContentStatus } from '../../types/content';
+
+interface Props {
+  status: ContentStatus;
+  class?: string;
+}
+
+const { status: _status } = Astro.props;
+void _status;
+---

@@ -1,0 +1,105 @@
+---
+import BrandLogo from '../ui/BrandLogo.astro';
+import { navLinks, restaurant, isPublicContact, mapsUrl } from '../../data/restaurant';
+
+const { contact } = restaurant;
+const phone = contact.phone && isPublicContact(contact.phone.status) ? contact.phone : null;
+const whatsapp = contact.whatsapp && isPublicContact(contact.whatsapp.status) ? contact.whatsapp : null;
+const year = new Date().getFullYear();
+const mskUrl = 'https://mskcreation.com';
+---
+
+<footer class="bg-chocolate text-white">
+  <div class="container-site section-pad grid gap-12 border-t border-white/10 md:grid-cols-12 md:gap-8">
+    <div class="md:col-span-5">
+      <a href="/" class="inline-block no-underline" aria-label={`${restaurant.shortName} — accueil`}>
+        <span class="inline-flex rounded-sm bg-cream/95 px-3 py-2">
+          <BrandLogo variant="full" tone="light" class="h-14 w-auto max-w-[12rem]" />
+        </span>
+      </a>
+      <p class="mt-5 max-w-sm text-gold/90">{restaurant.tagline}</p>
+      <address class="mt-6 not-italic text-sm text-white/80">
+        {contact.addressLines.map((line) => <span class="block">{line}</span>)}
+      </address>
+      {
+        phone && (
+          <a href={phone.href} class="mt-4 inline-block font-ui text-sm text-sun no-underline hover:underline">
+            {phone.value}
+          </a>
+        )
+      }
+      {
+        whatsapp && (
+          <a
+            href={whatsapp.href}
+            class="mt-2 block font-ui text-sm text-gold no-underline hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            WhatsApp
+          </a>
+        )
+      }
+      <a
+        href={mapsUrl}
+        class="mt-3 inline-block font-ui text-xs uppercase tracking-[0.12em] text-white/55 no-underline hover:text-white"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Voir sur Maps
+      </a>
+    </div>
+
+    <nav class="md:col-span-3" aria-label="Pied de page">
+      <p class="eyebrow text-sun/80">Parcourir</p>
+      <ul class="mt-4 space-y-3">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a href={link.href} class="font-ui text-sm text-white/85 no-underline hover:text-white">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="md:col-span-4 md:text-right">
+      <p class="eyebrow text-sun/80">Une place</p>
+      <a
+        href="/contact"
+        class="mt-4 inline-flex bg-desert-red px-5 py-3 font-ui text-xs font-bold uppercase tracking-[0.14em] text-white no-underline hover:bg-desert-red-hover"
+      >
+        Demander une table
+      </a>
+    </div>
+  </div>
+
+  <!-- Crédit MSK — pattern Prosperity : « Design by » + SVG logo (pas de texte doublon) -->
+  <div class="border-t border-white/10">
+    <div
+      class="container-site flex flex-col items-start justify-between gap-4 py-4 text-xs text-white/45 sm:flex-row sm:items-center"
+    >
+      <p>© {year} {restaurant.name}. Tous droits réservés.</p>
+      <a
+        href={mskUrl}
+        class="inline-flex items-center gap-2.5 text-white/50 no-underline transition hover:opacity-100 hover:brightness-110"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Design by MSK CREATION"
+      >
+        <span class="font-ui text-white/55">Design by</span>
+        <img
+          src="/images/brand/msk-creation.png"
+          alt="MSK CREATION"
+          width="160"
+          height="24"
+          class="h-7 w-[10rem] object-contain object-left"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+    </div>
+  </div>
+</footer>

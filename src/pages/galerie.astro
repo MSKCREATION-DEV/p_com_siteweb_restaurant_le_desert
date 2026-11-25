@@ -1,0 +1,214 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import { galleryImages } from '../data/gallery';
+
+const authentic = galleryImages.filter((i) => !i.illustrative);
+const culture = galleryImages.filter(
+  (i) =>
+    i.illustrative &&
+    (i.id.startsWith('culture-') || i.src.includes('/culture/') || i.category === 'desert'),
+);
+const culinary = galleryImages.filter(
+  (i) => i.illustrative && i.category === 'dishes',
+);
+
+/** Composition immersive : 1 large + mosaïque asymétrique */
+const [cultureLead, ...cultureRest] = culture;
+const [culinaryLead, ...culinaryRest] = culinary;
+---
+
+<BaseLayout
+  title="Galerie"
+  description="Photos du Restaurant Le Désert à Bamako — équipe, salon tente, culture du Nord et inspirations culinaires."
+>
+  <script is:inline>document.body.classList.add('page-interior');</script>
+  <PageHero
+    eyebrow="Atmosphère"
+    title="Galerie"
+    lead="Le lieu, la culture du Nord, puis le ton culinaire."
+    mediaSrc="/images/culture/the-femmes-nord.jpg"
+    mediaAlt="Hospitalité autour du thé — culture du Nord"
+  />
+
+  <!-- Le lieu — duo immersif asymétrique -->
+  <section class="bg-chocolate text-white" aria-labelledby="gal-lieu">
+    <div class="container-site section-pad">
+      <div class="max-w-xl" data-reveal>
+        <p class="eyebrow text-sun">Authenticité</p>
+        <h2 id="gal-lieu" class="mt-3 font-display text-[clamp(2rem,4vw,3.1rem)]">Le lieu</h2>
+        <p class="mt-3 text-white/75">Façade, équipe, salon tente — photos du restaurant à Bamako.</p>
+      </div>
+
+      <div class="mt-10 grid gap-5 md:grid-cols-12 md:gap-6">
+        {
+          authentic.map((img, i) => (
+            <figure
+              class:list={[
+                'group relative overflow-hidden',
+                i === 0 ? 'md:col-span-7' : 'md:col-span-5 md:mt-16',
+              ]}
+              data-reveal
+            >
+              <div class:list={['overflow-hidden', i === 0 ? 'aspect-[4/5] md:aspect-[5/6]' : 'aspect-[5/4]']}>
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  width="1200"
+                  height="1400"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+              </div>
+              <figcaption class="mt-3 font-ui text-[0.7rem] uppercase tracking-[0.12em] text-gold/85">
+                {img.caption}
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Culture — lead plein + masonry -->
+  <section class="relative overflow-hidden bg-linen" aria-labelledby="gal-culture">
+    <div class="texture-touareg absolute inset-0 opacity-45" aria-hidden="true" />
+    <div class="relative container-site section-pad">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-end" data-reveal>
+        <div class="lg:col-span-7">
+          <p class="eyebrow text-desert-red">Nord · Sahel</p>
+          <h2 id="gal-culture" class="mt-3 font-display text-[clamp(2rem,4vw,3.1rem)] text-chocolate">
+            Culture touareg
+          </h2>
+        </div>
+        <p class="max-w-md text-muted lg:col-span-5">
+          Thé, tapis, nattes et motifs géométriques — le langage visuel du Nord.
+        </p>
+      </div>
+
+      {
+        cultureLead && (
+          <figure class="mt-10 overflow-hidden" data-reveal>
+            <div class="aspect-[16/10] overflow-hidden md:aspect-[21/9]">
+              <img
+                src={cultureLead.src}
+                alt={cultureLead.alt}
+                width="1600"
+                height="900"
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="mt-3 font-ui text-[0.7rem] uppercase tracking-[0.12em] text-chocolate/80">
+              {cultureLead.caption}
+            </figcaption>
+          </figure>
+        )
+      }
+
+      <div class="mt-8 columns-1 gap-5 space-y-5 sm:columns-2 lg:columns-3">
+        {
+          cultureRest.map((img, i) => {
+            const tall = i % 3 !== 1;
+            return (
+              <figure class="break-inside-avoid" data-reveal>
+                <div class:list={['overflow-hidden', tall ? 'aspect-[3/4]' : 'aspect-[4/3]']}>
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    width="900"
+                    height={tall ? 1200 : 675}
+                    class="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                    loading="lazy"
+                  />
+                </div>
+                <figcaption class="mt-2 font-ui text-[0.7rem] uppercase tracking-[0.12em] text-chocolate/80">
+                  {img.caption}
+                </figcaption>
+              </figure>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Cuisine — feature + rythme décalé -->
+  <section class="bg-night text-white" aria-labelledby="gal-cuisine">
+    <div class="container-site section-pad">
+      <div class="max-w-xl" data-reveal>
+        <p class="eyebrow text-sun">Table</p>
+        <h2 id="gal-cuisine" class="mt-3 font-display text-[clamp(2rem,4vw,3.1rem)]">
+          Inspirations culinaires
+        </h2>
+        <p class="mt-3 text-white/75">Mafé, grillades, plats partagés — le ton du Sahel.</p>
+      </div>
+
+      {
+        culinaryLead && (
+          <div class="mt-12 grid gap-6 lg:grid-cols-12 lg:gap-8">
+            <figure class="lg:col-span-7" data-reveal>
+              <div class="aspect-[4/5] overflow-hidden md:aspect-[5/6]">
+                <img
+                  src={culinaryLead.src}
+                  alt={culinaryLead.alt}
+                  width="1200"
+                  height="1500"
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption class="mt-3 font-ui text-[0.7rem] uppercase tracking-[0.12em] text-gold/80">
+                {culinaryLead.caption}
+              </figcaption>
+            </figure>
+            <div class="flex flex-col gap-6 lg:col-span-5 lg:pt-20">
+              {culinaryRest.slice(0, 2).map((img) => (
+                <figure data-reveal>
+                  <div class="aspect-[5/4] overflow-hidden">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      width="900"
+                      height="720"
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <figcaption class="mt-2 font-ui text-[0.7rem] uppercase tracking-[0.12em] text-gold/80">
+                    {img.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      <div class="mt-8 columns-1 gap-5 space-y-5 md:columns-2 lg:columns-3">
+        {
+          culinaryRest.slice(2).map((img, i) => {
+            const tall = i % 4 === 0 || i % 4 === 2;
+            return (
+              <figure class="break-inside-avoid" data-reveal>
+                <div class:list={['overflow-hidden', tall ? 'aspect-[3/4]' : 'aspect-[4/3]']}>
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    width="900"
+                    height={tall ? 1200 : 675}
+                    class="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                    loading="lazy"
+                  />
+                </div>
+                <figcaption class="mt-2 font-ui text-[0.65rem] uppercase tracking-[0.12em] text-gold/70">
+                  {img.caption}
+                </figcaption>
+              </figure>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

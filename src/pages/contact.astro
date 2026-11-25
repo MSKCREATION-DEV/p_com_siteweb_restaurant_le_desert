@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import ContactForm from '../components/sections/ContactForm.astro';
+import StatusNote from '../components/ui/StatusNote.astro';
+import { restaurant, isPublicContact, mapsUrl } from '../data/restaurant';
+
+const { contact } = restaurant;
+const showPhone = contact.phone && isPublicContact(contact.phone.status);
+const showWhatsApp = contact.whatsapp && isPublicContact(contact.whatsapp.status);
+---
+
+<BaseLayout
+  title="Contact"
+  description="Demande de contact ou de table au Restaurant Le Désert — Bamako."
+>
+  <script is:inline>document.body.classList.add('page-interior');</script>
+  <PageHero
+    eyebrow="Venir / écrire"
+    title="Contact"
+    lead="Envoyez une demande. Nous confirmons ensuite la table avec vous — jamais automatiquement."
+    mediaSrc="/images/venue/equipe-facade.jpg"
+    mediaAlt=""
+  />
+
+  <section class="section-pad bg-linen">
+    <div class="container-site grid gap-16 lg:grid-cols-12">
+      <div class="space-y-10 lg:col-span-5">
+        <div data-reveal>
+          <p class="eyebrow text-desert-red">Lieu</p>
+          <StatusNote status={contact.addressStatus} class="mt-2" />
+          <address class="mt-2 not-italic text-ink">
+            {contact.addressLines.map((line) => <span class="block text-lg">{line}</span>)}
+          </address>
+          <a
+            href={mapsUrl}
+            class="mt-3 inline-block font-ui text-xs uppercase tracking-[0.12em] text-desert-red no-underline hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Ouvrir dans Maps →
+          </a>
+        </div>
+
+        <div data-reveal>
+          <p class="eyebrow text-desert-red">Horaires</p>
+          <StatusNote status={contact.hoursStatus} class="mt-2" />
+          <p class="mt-2 text-lg text-ink">{contact.hoursNote}</p>
+        </div>
+
+        {
+          showPhone && contact.phone && (
+            <div data-reveal>
+              <p class="eyebrow text-desert-red">Téléphone</p>
+              <StatusNote status={contact.phone.status} class="mt-2" />
+              <a
+                href={contact.phone.href}
+                class="mt-2 inline-block font-display text-2xl text-ink no-underline hover:text-desert-red"
+              >
+                {contact.phone.value}
+              </a>
+            </div>
+          )
+        }
+
+        {
+          showWhatsApp && contact.whatsapp && (
+            <div data-reveal>
+              <p class="eyebrow text-desert-red">WhatsApp</p>
+              <StatusNote status={contact.whatsapp.status} class="mt-2" />
+              <a
+                href={contact.whatsapp.href}
+                class="mt-2 inline-block font-ui text-sm uppercase tracking-[0.12em] text-desert-red no-underline hover:underline"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Ouvrir WhatsApp →
+              </a>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="lg:col-span-7" data-reveal>
+        <h2 class="font-display text-2xl text-ink md:text-3xl">Formulaire de demande</h2>
+        <div class="mt-6">
+          <ContactForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

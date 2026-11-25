@@ -1,0 +1,13 @@
+---
+description: Workflow projet — spec, incrémental, validation
+alwaysApply: true
+---
+
+# Workflow
+
+1. Lire `AGENTS.md` + docs concernés (`docs/`).
+2. Si brief flou → skill `interview-me` / `idea-refine` avant scaffold.
+3. Une phase / une section à la fois.
+4. Après UI : check + parcours navigateur (ou capture).
+5. Décisions documentées dans `docs/` (SPEC, ADR, DESIGN_DECISIONS).
+6. Ne pas committer sans demande explicite.

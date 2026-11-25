@@ -1,0 +1,140 @@
+---
+/**
+ * Logo marque V5 :
+ * - full / wordmark = typo CSS (zéro frange JPEG) + emblème PNG détouré
+ * - mark = emblème seul
+ */
+interface Props {
+  variant?: 'full' | 'mark' | 'wordmark';
+  tone?: 'dark' | 'light';
+  class?: string;
+  priority?: boolean;
+}
+
+const { variant = 'full', tone = 'dark', class: className = '', priority = false } = Astro.props;
+
+const showWord = variant === 'full' || variant === 'wordmark';
+const showMark = variant === 'full' || variant === 'mark';
+---
+
+<span
+  class:list={[
+    'brand-logo inline-flex items-center gap-[0.35em]',
+    tone === 'dark' && 'brand-logo--dark',
+    tone === 'light' && 'brand-logo--light',
+    className,
+  ]}
+  role="img"
+  aria-label="Restaurant Le Désert"
+>
+  {
+    showWord && (
+      <span class="brand-wordmark" aria-hidden="true">
+        <span class="brand-wordmark__rest">RESTAURANT</span>
+        <span class="brand-wordmark__line">
+          <span class="brand-wordmark__du">
+            du
+            <span class="brand-wordmark__swash" />
+          </span>
+          <span class="brand-wordmark__desert">Désert</span>
+        </span>
+      </span>
+    )
+  }
+  {
+    showMark && (
+      <img
+        src="/images/brand/logo-mark.png"
+        alt=""
+        width="120"
+        height="120"
+        class="brand-mark h-[1.85em] w-auto shrink-0 object-contain"
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchpriority={priority ? 'high' : undefined}
+      />
+    )
+  }
+</span>
+
+<style>
+  .brand-logo--dark {
+    /* Pas de drop-shadow : évite tout halo perçu sur fond chocolat */
+  }
+  .brand-logo--light .brand-mark {
+    filter: drop-shadow(0 1px 1px rgb(61 33 23 / 0.12));
+  }
+
+  .brand-wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    color: var(--color-chocolate);
+  }
+
+  .brand-wordmark__rest {
+    font-family: var(--font-ui);
+    font-weight: 800;
+    font-size: 0.72em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-chocolate);
+  }
+
+  .brand-logo--dark .brand-wordmark__rest {
+    /* Sur header chocolat : brun plus clair pour lisibilité sans halo */
+    color: #c4a090;
+  }
+
+  .brand-wordmark__line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.2em;
+    margin-top: 0.08em;
+  }
+
+  .brand-wordmark__du {
+    position: relative;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 0.55em;
+    color: var(--color-desert-red);
+    line-height: 1;
+  }
+
+  .brand-logo--dark .brand-wordmark__du {
+    color: #e85a45;
+  }
+
+  .brand-wordmark__swash {
+    position: absolute;
+    left: -0.05em;
+    right: -0.15em;
+    bottom: -0.18em;
+    height: 0.18em;
+    background: var(--color-sun);
+    clip-path: polygon(0 40%, 100% 0, 100% 70%, 0 100%);
+  }
+
+  .brand-wordmark__desert {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.05em;
+    color: var(--color-desert-red);
+    letter-spacing: -0.01em;
+  }
+
+  .brand-logo--dark .brand-wordmark__desert {
+    color: #e85a45;
+  }
+
+  .brand-logo--light .brand-wordmark__rest {
+    color: var(--color-chocolate);
+  }
+  .brand-logo--light .brand-wordmark__du,
+  .brand-logo--light .brand-wordmark__desert {
+    color: var(--color-desert-red);
+  }
+</style>

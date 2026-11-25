@@ -1,0 +1,88 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  dark?: boolean;
+  /** Image de fond optionnelle (full-bleed) */
+  mediaSrc?: string;
+  mediaAlt?: string;
+  /** Fond tapis traité optionnel */
+  rugSrc?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  dark = true,
+  mediaSrc,
+  mediaAlt = '',
+  rugSrc = '/images/textures/rug-bg-night.jpg',
+} = Astro.props;
+---
+
+<section
+  class:list={[
+    'relative overflow-hidden pt-[calc(var(--header-h)+1.5rem)] pb-12 md:pb-16',
+    dark ? 'bg-chocolate text-white' : 'bg-linen text-ink',
+    mediaSrc && 'min-h-[min(52vh,28rem)]',
+  ]}
+  aria-label={title}
+>
+  {
+    mediaSrc ? (
+      <div class="absolute inset-0" aria-hidden={!mediaAlt}>
+        <img
+          src={mediaSrc}
+          alt={mediaAlt}
+          width="1600"
+          height="900"
+          class="h-full w-full object-cover"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <div
+          class:list={[
+            'absolute inset-0',
+            dark
+              ? 'bg-gradient-to-r from-chocolate/92 via-chocolate/70 to-chocolate/40'
+              : 'bg-gradient-to-r from-linen/95 via-linen/80 to-linen/50',
+          ]}
+        />
+        <div class="texture-touareg absolute inset-0 opacity-40" />
+        <img
+          src="/images/overlays/spray-sable-red.png"
+          alt=""
+          width="900"
+          height="500"
+          class="pointer-events-none absolute -right-8 top-8 w-[min(40vw,18rem)] opacity-70 mix-blend-screen"
+          aria-hidden="true"
+        />
+      </div>
+    ) : (
+      <div class="absolute inset-0" aria-hidden="true">
+        <img src={rugSrc} alt="" width="1600" height="1060" class="h-full w-full object-cover opacity-50" />
+        <div
+          class:list={[
+            'absolute inset-0',
+            dark ? 'bg-chocolate/85' : 'bg-linen/80',
+          ]}
+        />
+        <div class="texture-touareg absolute inset-0 opacity-50" />
+      </div>
+    )
+  }
+
+  <div class="relative container-site max-w-4xl">
+    {eyebrow && <p class:list={['eyebrow mb-3', dark ? 'text-sun' : 'text-desert-red']}>{eyebrow}</p>}
+    <h1 class="font-display text-balance text-[clamp(2.4rem,6vw,4.5rem)]">{title}</h1>
+    {
+      lead && (
+        <p class:list={['mt-4 max-w-2xl text-base md:text-lg', dark ? 'text-white/85' : 'text-muted']}>
+          {lead}
+        </p>
+      )
+    }
+  </div>
+</section>

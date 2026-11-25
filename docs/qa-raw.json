@@ -1,0 +1,64 @@
+[
+  {
+    "route": "/",
+    "status": 200,
+    "title": "Restaurant Le Désert · Bamako",
+    "h1": "Le Désert",
+    "skipLink": true,
+    "brokenImages": [],
+    "errors": []
+  },
+  {
+    "route": "/notre-histoire",
+    "status": 200,
+    "title": "Notre histoire · Le Désert",
+    "h1": "Notre histoire",
+    "skipLink": true,
+    "brokenImages": [],
+    "errors": []
+  },
+  {
+    "route": "/carte",
+    "status": 200,
+    "title": "La carte · Le Désert",
+    "h1": "La carte",
+    "skipLink": true,
+    "brokenImages": [],
+    "errors": []
+  },
+  {
+    "route": "/galerie",
+    "status": 200,
+    "title": "Galerie · Le Désert",
+    "h1": "Galerie",
+    "skipLink": true,
+    "brokenImages": [],
+    "errors": []
+  },
+  {
+    "route": "/contact",
+    "status": 200,
+    "title": "Contact · Le Désert",
+    "h1": "Contact",
+    "skipLink": true,
+    "brokenImages": [],
+    "errors": []
+  },
+  {
+    "form": true,
+    "honestCopy": true,
+    "noAutoConfirm": true
+  },
+  {
+    "navHrefs": [
+      "/",
+      "/notre-histoire",
+      "/carte",
+      "/galerie",
+      "/contact"
+    ]
+  },
+  {
+    "mobileMenuOpens": true
+  }
+]

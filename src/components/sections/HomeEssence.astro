@@ -1,0 +1,99 @@
+---
+import { tentImage, cultureTea } from '../../data/gallery';
+---
+
+<!-- Essence — fond tapis traité + split Sphere-like culture -->
+<section class="relative overflow-hidden bg-linen text-ink" aria-labelledby="essence-title">
+  <!-- Fond tapis artistiquement traité (pas wallpaper raw) -->
+  <div class="absolute inset-0" aria-hidden="true">
+    <img
+      src="/images/textures/rug-bg-cream.jpg"
+      alt=""
+      width="1600"
+      height="1060"
+      class="h-full w-full object-cover opacity-55"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-linen/80 via-linen/55 to-linen/90"></div>
+    <div class="texture-touareg absolute inset-0 opacity-50"></div>
+  </div>
+
+  <div class="relative">
+    <div class="container-site pt-[clamp(4rem,10vw,7rem)]">
+      <div class="max-w-xl lg:ml-[4%]" data-reveal>
+        <p class="eyebrow text-desert-red">Culture touareg</p>
+        <h2 id="essence-title" class="mt-3 font-display text-[clamp(2.2rem,5vw,3.75rem)] text-chocolate">
+          Sous la tente,<br />au cœur de Bamako
+        </h2>
+      </div>
+    </div>
+
+    <!-- Split : copy + média avec fade soft -->
+    <div class="relative mt-12 md:mt-16">
+      <div class="container-site grid items-center gap-10 lg:grid-cols-12 lg:gap-6">
+        <div class="relative z-10 lg:col-span-5" data-reveal>
+          <div class="divider-filigree mb-5 max-w-[10rem]" aria-hidden="true"></div>
+          <p class="text-lg text-chocolate/90">
+            Tapis, losanges, banquettes basses : le salon tente n’est pas un décor de voyage —
+            c’est l’hospitalité du Nord, ici, à table.
+          </p>
+          <p class="mt-4 text-muted">
+            Motifs et lumière du Sahel en langage — thé, artisanat, présence — pas en carte postale.
+          </p>
+          <a
+            href="/notre-histoire"
+            class="mt-6 inline-flex font-ui text-[0.75rem] font-bold uppercase tracking-[0.14em] text-desert-red no-underline hover:text-desert-red-hover"
+          >
+            Lire notre histoire →
+          </a>
+        </div>
+
+        <div class="relative lg:col-span-7">
+          <div class="essence-media relative aspect-[16/11] overflow-hidden md:aspect-[5/3]">
+            <img
+              src={tentImage.src}
+              alt={tentImage.alt}
+              width="1400"
+              height="900"
+              class="h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+            <div
+              class="absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-linen via-linen/40 to-transparent"
+              aria-hidden="true"
+            ></div>
+            <img
+              src="/images/overlays/spray-sable-red.png"
+              alt=""
+              width="900"
+              height="500"
+              class="pointer-events-none absolute -right-4 -top-6 w-[42%] opacity-75 mix-blend-multiply"
+              aria-hidden="true"
+            />
+          </div>
+          <!-- Petite vignette culture décalée -->
+          <figure
+            class="absolute -bottom-8 right-[6%] z-20 w-[36%] max-w-[13rem] ring-4 ring-linen shadow-[0_16px_40px_rgb(26_16_12/0.25)] md:-bottom-10"
+            data-reveal
+          >
+            <div class="aspect-square overflow-hidden">
+              <img
+                src={cultureTea.src}
+                alt={cultureTea.alt}
+                width="480"
+                height="480"
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="bg-cream px-2 py-1 font-ui text-[0.6rem] uppercase tracking-[0.1em] text-muted">
+              Thé · culture du Nord
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="h-16 md:h-20" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>

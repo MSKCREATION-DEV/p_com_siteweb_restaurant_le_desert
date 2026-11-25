@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import StatusNote from '../components/ui/StatusNote.astro';
+import Button from '../components/ui/Button.astro';
+import { menuCategories } from '../data/menu';
+---
+
+<BaseLayout
+  title="La carte"
+  description="Inspirations culinaires du Restaurant Le Désert à Bamako — mafé, yassa, plats du Sahel. La carte du jour se découvre sur place."
+>
+  <script is:inline>document.body.classList.add('page-interior');</script>
+  <PageHero
+    eyebrow="Gastronomie"
+    title="La carte"
+    lead="Le ton du Sahel en images — la sélection du jour se découvre à table."
+    mediaSrc="/images/gallery/assiette-sombre.jpg"
+    mediaAlt="Assiette dressée — inspiration culinaire"
+  />
+
+  <section class="bg-linen pb-[clamp(4.5rem,11vw,9rem)] pt-10">
+    <div class="container-site">
+      <p class="mb-12 max-w-2xl border-l-2 border-desert-red pl-5 text-sm text-muted" data-reveal>
+        Inspirations régionales pour donner le ton — menu et prix sur place.
+      </p>
+
+      {
+        menuCategories.map((cat) => (
+          <section class="mb-24" aria-labelledby={`cat-${cat.id}`} data-reveal>
+            <StatusNote status={cat.status} />
+            <h2 id={`cat-${cat.id}`} class="mt-2 font-display text-[clamp(2rem,4vw,3rem)] text-ink">
+              {cat.title}
+            </h2>
+            {cat.intro && <p class="mt-3 max-w-2xl text-muted">{cat.intro}</p>}
+
+            <ul class="mt-12 space-y-16">
+              {cat.items.map((item, idx) => (
+                <li
+                  class:list={[
+                    'grid items-center gap-8 lg:grid-cols-12 lg:gap-12',
+                    idx % 2 === 1 && 'lg:[&>figure]:order-2',
+                  ]}
+                >
+                  {item.image && (
+                    <figure class="lg:col-span-5">
+                      <div class="aspect-[4/3] overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.imageAlt ?? item.name}
+                          width="1000"
+                          height="750"
+                          class="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                      {item.note && (
+                        <figcaption class="mt-2 font-ui text-[0.65rem] uppercase tracking-[0.12em] text-muted">
+                          {item.note}
+                        </figcaption>
+                      )}
+                    </figure>
+                  )}
+                  <div class:list={[item.image ? 'lg:col-span-6' : 'lg:col-span-8']}>
+                    <div class="flex flex-wrap items-baseline justify-between gap-3 border-b border-ink/15 pb-4">
+                      <h3 class="font-display text-2xl text-ink md:text-3xl">{item.name}</h3>
+                      <p class="font-ui text-sm text-muted">{item.priceLabel ?? 'Sur place'}</p>
+                    </div>
+                    {item.description && <p class="mt-4 text-muted">{item.description}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+
+      <div class="mt-8 flex flex-wrap gap-4" data-reveal>
+        <Button href="/contact" variant="primary">Demander une table</Button>
+        <Button href="/galerie" variant="ghost">Galerie</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

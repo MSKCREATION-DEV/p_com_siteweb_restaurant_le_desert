@@ -1,0 +1,115 @@
+---
+import { galleryImages, cultureArtisanat } from '../../data/gallery';
+
+const plate = galleryImages.find((i) => i.id === 'plats-afrique')!;
+const mafe = galleryImages.find((i) => i.id === 'mafe')!;
+---
+
+<!-- Invite gastronomie — fond tapis nuit + slideshow assiettes Sphere-like -->
+<section class="relative overflow-hidden bg-night text-white" aria-labelledby="invite-title">
+  <div class="absolute inset-0" aria-hidden="true">
+    <img
+      src="/images/textures/rug-bg-night.jpg"
+      alt=""
+      width="1600"
+      height="1060"
+      class="h-full w-full object-cover opacity-45"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-br from-night/95 via-night/80 to-chocolate/70"></div>
+    <div class="texture-touareg absolute inset-0 opacity-30 mix-blend-soft-light"></div>
+  </div>
+
+  <div class="relative container-site section-pad">
+    <div class="grid gap-14 lg:grid-cols-12 lg:items-center lg:gap-10">
+      <!-- Typo gauche -->
+      <div class="lg:col-span-5" data-reveal>
+        <p class="eyebrow text-sun">À table</p>
+        <h2 id="invite-title" class="mt-3 font-display text-[clamp(2rem,4vw,3.1rem)]">
+          Ce qui se goûte,<br />pas ce qui s’affiche
+        </h2>
+        <div class="divider-filigree my-6 max-w-[12rem]" aria-hidden="true"></div>
+        <p class="text-lg text-white/80">
+          La carte officielle n’est pas encore publiée. Nous monitrons des inspirations ouest-africaines
+          — mafé, yassa, grillades — clairement labellisées comme illustrations, jamais comme menu du Désert.
+        </p>
+        <p class="mt-4 text-white/65">
+          L’équipe vous accueille ; le détail de l’assiette se confirme sur place.
+        </p>
+        <a
+          href="/carte"
+          class="mt-8 inline-flex font-ui text-[0.75rem] font-bold uppercase tracking-[0.16em] text-sun no-underline hover:text-gold"
+        >
+          Explorer la carte →
+        </a>
+      </div>
+
+      <!-- Composition assiettes à droite -->
+      <div class="relative lg:col-span-7">
+        <div class="invite-plate relative aspect-[5/4] overflow-hidden md:aspect-[16/11]">
+          <img
+            src={plate.src}
+            alt={plate.alt}
+            width="1200"
+            height="900"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div
+            class="absolute inset-y-0 left-0 w-[24%] bg-gradient-to-r from-night via-night/50 to-transparent"
+            aria-hidden="true"
+          ></div>
+          <img
+            src="/images/overlays/spray-sable-amber.png"
+            alt=""
+            width="700"
+            height="380"
+            class="pointer-events-none absolute -right-4 top-4 w-[48%] opacity-80 mix-blend-screen"
+            aria-hidden="true"
+          />
+        </div>
+        <figure
+          class="absolute -bottom-6 left-[4%] z-20 w-[40%] max-w-[14rem] ring-4 ring-night md:bottom-4 md:left-0"
+        >
+          <div class="aspect-square overflow-hidden">
+            <img
+              src={mafe.src}
+              alt={mafe.alt}
+              width="560"
+              height="560"
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <figcaption class="mt-1 font-ui text-[0.6rem] uppercase tracking-[0.1em] text-white/45">
+            Inspiration régionale
+          </figcaption>
+        </figure>
+        <figure
+          class="absolute -top-4 right-[2%] z-20 hidden w-[28%] max-w-[10rem] ring-2 ring-cream/20 md:block"
+        >
+          <div class="aspect-[4/5] overflow-hidden">
+            <img
+              src={cultureArtisanat.src}
+              alt={cultureArtisanat.alt}
+              width="400"
+              height="500"
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <figcaption class="mt-1 font-ui text-[0.55rem] uppercase tracking-[0.1em] text-gold/60">
+            Artisanat du Nord
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .invite-plate {
+    mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 100%);
+  }
+</style>

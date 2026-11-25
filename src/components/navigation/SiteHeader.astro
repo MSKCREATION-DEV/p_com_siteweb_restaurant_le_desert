@@ -1,0 +1,126 @@
+---
+import BrandLogo from '../ui/BrandLogo.astro';
+import { navLinks, restaurant } from '../../data/restaurant';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header absolute inset-x-0 top-0 z-50" data-site-header>
+  <div class="container-site flex h-[var(--header-h)] items-center justify-between gap-4">
+    <a
+      href="/"
+      class="brand-link relative z-[60] flex items-center gap-3 no-underline"
+      aria-label={`${restaurant.shortName} — accueil`}
+    >
+      <BrandLogo variant="full" tone="dark" class="h-11 w-[9.75rem] md:h-12 md:w-[11.5rem]" priority />
+    </a>
+
+    <nav
+      class="nav-desktop hidden items-center gap-1 rounded-sm bg-ink/55 px-2 py-1.5 backdrop-blur-md ring-1 ring-white/15 xl:flex"
+      aria-label="Navigation principale"
+    >
+      {
+        navLinks.map((link) => {
+          const hrefNorm = link.href.replace(/\/$/, '') || '/';
+          const active = path === hrefNorm;
+          return (
+            <a
+              href={link.href}
+              class:list={[
+                'font-ui rounded-sm px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white no-underline transition-colors',
+                active ? 'bg-white/15 text-white' : 'text-white/90 hover:bg-white/10 hover:text-white',
+              ]}
+              aria-current={active ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          );
+        })
+      }
+      <a
+        href="/contact"
+        class="font-ui ml-1 inline-flex items-center bg-desert-red px-4 py-2 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-white no-underline transition-colors hover:bg-desert-red-hover"
+      >
+        Réserver
+      </a>
+    </nav>
+
+    <button
+      type="button"
+      class="menu-toggle relative z-[60] flex h-11 w-11 items-center justify-center border border-white/40 bg-ink/50 text-white backdrop-blur-sm xl:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Ouvrir le menu"
+      data-menu-toggle
+    >
+      <span class="sr-only">Menu</span>
+      <span class="flex w-5 flex-col gap-1.5" aria-hidden="true">
+        <span class="block h-0.5 w-full bg-current" data-bar="1"></span>
+        <span class="block h-0.5 w-full bg-current" data-bar="2"></span>
+        <span class="block h-0.5 w-full bg-current" data-bar="3"></span>
+      </span>
+    </button>
+  </div>
+
+  <div
+    id="mobile-nav"
+    class="mobile-nav fixed inset-0 z-50 flex translate-x-full flex-col bg-chocolate px-[var(--gutter)] pt-28 transition-transform duration-500 ease-[var(--ease-out)] xl:hidden"
+    data-mobile-nav
+    hidden
+  >
+    <div class="texture-touareg pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
+    <nav class="relative flex flex-col gap-4" aria-label="Navigation mobile">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="font-display text-3xl text-white no-underline sm:text-4xl"
+            data-mobile-link
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href="/contact"
+        class="mt-6 inline-flex w-fit bg-desert-red px-5 py-3 font-ui text-sm font-bold uppercase tracking-[0.14em] text-white no-underline"
+        data-mobile-link
+      >
+        Demander une table
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const panel = document.querySelector('[data-mobile-nav]');
+  if (toggle && panel) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+      panel.classList.toggle('translate-x-full', !open);
+      panel.toggleAttribute('hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      setOpen(open);
+    });
+    panel.querySelectorAll('[data-mobile-link]').forEach((a) => {
+      a.addEventListener('click', () => setOpen(false));
+    });
+  }
+</script>
+
+<style>
+  :global(body.page-interior) .site-header {
+    position: sticky;
+    background: color-mix(in srgb, var(--color-chocolate) 92%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-sun) 22%, transparent);
+  }
+
+  :global(body.page-interior) .nav-desktop {
+    background: color-mix(in srgb, var(--color-ink) 40%, transparent);
+  }
+</style>

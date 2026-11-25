@@ -1,0 +1,71 @@
+---
+description: Auto-applique les agent-skills Addy Osmani sans demande explicite
+alwaysApply: true
+---
+
+# Agent Skills — auto-application (Restaurant Le Désert)
+
+Les skills vivent dans `.cursor/skills/<name>/SKILL.md`.  
+**Ne pas coller le corps des skills ici** — les **lire** (outil Read) puis **suivre les étapes**.
+
+Les règles projet (charte, stack, contenu) **priment** en cas de conflit avec une best practice générique.
+
+Upstream clone (resync) : `agent-skills/`. Path Cursor : `.cursor/skills/`.
+
+---
+
+## Comportements toujours actifs
+
+(issus de `using-agent-skills` — non négociables)
+
+1. **Assumptions** — avant code non trivial, énoncer les hypothèses ; laisser corriger.
+2. **Confusion** — stopper, nommer le conflit, demander ; ne pas deviner.
+3. **Push-back** — signaler une mauvaise approche + alternative concrète.
+4. **Simplicité** — solution la plus courte / évidente qui marche.
+5. **Scope** — ne toucher que ce qui est demandé (pas de refactor opportuniste).
+6. **Vérifier** — build / parcours / preuve ; « ça a l’air bon » ≠ terminé.
+
+---
+
+## Cœur obligatoire (auto)
+
+Avant le travail concerné, **lire le `SKILL.md`** listé, puis l’appliquer.  
+Pas besoin que l’utilisateur dise « utilise le skill ».
+
+| Situation | Skills à lire (dans l’ordre) |
+|-----------|------------------------------|
+| Demande floue / « build X » sans qui/pourquoi | `interview-me` |
+| Idée brute à raffiner (variants / critères) | `idea-refine` |
+| Session / routage / doute sur le process | `using-agent-skills` |
+| Feature / changement multi-fichiers | `planning-and-task-breakdown` → `incremental-implementation` |
+| Logique, bugfix, changement de comportement | `test-driven-development` |
+| UI / pages / composants / layouts | `frontend-ui-engineering` |
+| Audit a11y / contraste / clavier / WCAG | `accessibility-engineering` |
+| Vérif runtime navigateur / parcours UI | `browser-testing-with-devtools` |
+| Formulaires, secrets, contact, données perso | `security-and-hardening` |
+| Erreur, build cassé, régression | `debugging-and-error-recovery` |
+| Avant de déclarer « fini » / review | `code-review-and-quality` |
+| Lib / framework (Astro, Next, Tailwind…) | `source-driven-development` (+ Context7 MCP) |
+
+**Minimum par livraison code :**  
+`incremental-implementation` + vérif (`test-driven-development` et/ou parcours navigateur) + `code-review-and-quality`.
+
+---
+
+## Skills à la demande (pas auto)
+
+`spec-driven-development`, `constraint-driven-development`, `context-engineering`, `doubt-driven-development`, `api-and-interface-design`, `code-simplification`, `performance-optimization`, `observability-and-instrumentation`, `documentation-and-adrs`, `deprecation-and-migration`, `git-workflow-and-versioning`, `ci-cd-and-automation`, `shipping-and-launch`.
+
+Les charger quand la phase matche (voir `using-agent-skills`).
+
+---
+
+## Resync upstream
+
+```bash
+rm -rf agent-skills
+git clone --depth 1 https://github.com/addyosmani/agent-skills.git agent-skills
+rsync -a agent-skills/skills/ .cursor/skills/
+rsync -a agent-skills/references/ .cursor/references/
+.cursor/scripts/enable-core-skill-auto-invoke.sh
+```
