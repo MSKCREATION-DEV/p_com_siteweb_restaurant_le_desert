@@ -24,7 +24,7 @@ Via Git : `git push -u origin dev` → Vercel crée un **Preview** sur `dev`.
 
 | Type | URL |
 |------|-----|
-| Preview récente | https://restaurant-le-desert-57sisuzmk-mskcreations-projects.vercel.app |
+| Preview récente | https://restaurant-le-desert-8m22vzkuc-mskcreations-projects.vercel.app |
 | Alias projet | https://restaurant-le-desert.vercel.app |
 | Inspector | https://vercel.com/mskcreations-projects/restaurant-le-desert |
 
