@@ -40,7 +40,7 @@ Voir `.cursor/rules/msk-coding-style.mdc` et [`docs/STYLE_PROFILE.md`](docs/STYL
 
 ## Déploiement
 
-- Preview Vercel depuis `dev` uniquement — voir [`docs/DEPLOY.md`](docs/DEPLOY.md).
+- Preview Vercel depuis `dev` uniquement — voir [`docs/DEPLOY-PREVIEW.md`](docs/DEPLOY-PREVIEW.md).
 - **Pas de production** tant que le client n’a pas validé (pas de `vercel --prod`, pas de domaine prod).
 
 ## Prochaines étapes (client)

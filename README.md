@@ -29,7 +29,7 @@ Node ≥ 22 requis.
 ## Documentation
 
 - [`AGENTS.md`](AGENTS.md) — règles agents
-- [`docs/DEPLOY.md`](docs/DEPLOY.md) — **preview Vercel uniquement** (pas de prod)
+- [`docs/DEPLOY-PREVIEW.md`](docs/DEPLOY-PREVIEW.md) — **preview Vercel uniquement** (pas de prod)
 - [`docs/RESEARCH-RESTAURANT.md`](docs/RESEARCH-RESTAURANT.md) — recherche & gaps client
 - [`docs/DESIGN-SYSTEM.md`](docs/DESIGN-SYSTEM.md) — tokens & DA
 - [`docs/DESIGN-DIRECTION.md`](docs/DESIGN-DIRECTION.md) — références
@@ -39,7 +39,7 @@ Node ≥ 22 requis.
 
 ## Déploiement
 
-Preview seulement pour l’instant (`dev` → Vercel Preview). **Ne pas** `vercel --prod` ni assigner un domaine production. Détails : [`docs/DEPLOY.md`](docs/DEPLOY.md).
+Preview seulement pour l’instant (`dev` → Vercel Preview). **Ne pas** `vercel --prod` ni assigner un domaine production. Détails : [`docs/DEPLOY-PREVIEW.md`](docs/DEPLOY-PREVIEW.md).
 
 ## Contenu
 

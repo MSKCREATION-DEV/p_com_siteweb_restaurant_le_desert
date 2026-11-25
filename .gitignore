@@ -21,6 +21,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.log
 
 # OS / IDE
 .DS_Store
@@ -35,14 +36,23 @@ playwright-report/
 playwright/.cache/
 .cache/
 
+# Python / rembg / temp
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+tmp/
+.tmp/
+
 # Upstream skills clone (resync only — runtime = .cursor/skills)
 # Avoid nested git (agent-skills/.git) polluting this repo.
 agent-skills/
 
-# Raw client drops at repo root (brand/venue already in public/images/)
+# Raw client drops (brand/venue already in public/images/)
 /images.jpeg
 /images (1).jpeg
 /logo_le_desert.jpg
+docs/assets-source/
 
 # Scrap / temp assets
 **/_tmp*
@@ -51,7 +61,8 @@ agent-skills/
 beneficial-bar/
 **/magnific*/**
 
-# Heavy historic QA screenshot dumps (keep v6 + refs + markdown docs)
+# Heavy historic QA screenshot dumps
+# Kept in git (minimal useful set): docs/qa-screenshots-v6/, docs/refs-screenshots/
 docs/qa-screenshots/
 docs/qa-screenshots-v2/
 docs/qa-screenshots-v3/
