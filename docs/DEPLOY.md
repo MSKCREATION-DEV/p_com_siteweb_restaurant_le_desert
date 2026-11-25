@@ -28,17 +28,14 @@ Site **Astro SSG** (sortie `dist/`). Vercel détecte Astro sans adapter pour un 
 ## Option B — CLI (preview only)
 
 ```bash
-npm run build
-vercel          # SANS --prod → preview
+vercel          # SANS --prod → preview (projet déjà lié via .vercel/)
 # jamais : vercel --prod
 ```
 
-Si le projet n’est pas lié :
-
-```bash
-vercel link     # interactif — à faire par l’humain
-vercel          # preview
-```
+Notes plateforme Vercel :
+- Le **premier** déploiement d’un projet neuf peut être assigné à Production même sans `--prod` (message CLI). Les suivants sans `--prod` sont des **Preview**.
+- L’alias `*.vercel.app` n’est **pas** un domaine client. Ne pas ajouter de domaine custom / DNS prod.
+- Avec Deployment Protection (SSO Vercel), l’URL peut demander une auth équipe.
 
 ## `vercel.json`
 
